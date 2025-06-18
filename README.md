@@ -366,16 +366,6 @@ The application supports several configuration options:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🔗 Links
 
-- [Repository](https://github.com/Nahro-Aso/ideal_function_selector)
-- [Issues](https://github.com/Nahro-Aso/ideal_function_selector/issues)
-- [Documentation](https://github.com/Nahro-Aso/ideal_function_selector/wiki)
-
-## 📞 Contact
-
-For questions, suggestions, or collaboration opportunities, please open an issue on GitHub.
-
----
 
 **Built with ❤️ using Python, SQLAlchemy, and Bokeh**
