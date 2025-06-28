@@ -3,17 +3,12 @@ Main entry point for the ideal function selection application.
 """
 
 import os
-import sys
-
-# Add src directory to Python path
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(__file__)), 'src'))
-
-from ideal_function_selector import IdealFunctionSelector
+from .ideal_function_selector import IdealFunctionSelector
 
 
 def main():
     """Main function to run the application."""
-    # Get the project root directory
+    # Get the project root directory (parent of src directory)
     project_root = os.path.dirname(os.path.dirname(__file__))
     
     # File paths - now pointing to data directory

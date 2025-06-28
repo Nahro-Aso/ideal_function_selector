@@ -6,8 +6,9 @@ A Python application for selecting ideal functions that best match training data
 
 ```
 ideal_function_selector/
-├── src/                          # Source code
+├── src/                          # Source code (Python package)
 │   ├── __init__.py              # Package initialization
+│   ├── main.py                  # Main entry point
 │   ├── ideal_function_selector.py  # Main orchestrator class
 │   ├── data_loader.py           # Data loading and validation
 │   ├── database_handler.py      # Database models and operations
@@ -25,8 +26,7 @@ ideal_function_selector/
 │   └── *.png                   # Static plots
 ├── tests/                       # Test suite
 │   └── test_suite.py           # Unit tests
-├── scripts/                     # Executable scripts
-│   ├── main.py                 # Entry point script
+├── scripts/                     # Utility scripts
 │   └── run_project.sh          # Bash runner script
 ├── docs/                        # Documentation
 │   └── README.md               # This file
@@ -88,17 +88,24 @@ pip install -r requirements.txt
 ### Quick Start
 
 ```bash
-# Run the complete analysis
-python scripts/main.py
+# Run the complete analysis (recommended)
+python3 -m src.main
 
 # Or use the bash script (Linux/macOS)
 ./scripts/run_project.sh
+
+# Alternative: Run with PYTHONPATH
+PYTHONPATH=. python3 src/main.py
 ```
 
 ### Manual Usage
 
 ```python
+# When using as a module
 from src.ideal_function_selector import IdealFunctionSelector
+
+# Or when src is in PYTHONPATH
+# from ideal_function_selector import IdealFunctionSelector
 
 # Initialize selector
 selector = IdealFunctionSelector("output/my_analysis.db")
@@ -154,7 +161,14 @@ After running the analysis, check the `output/` directory for:
 Run the test suite:
 
 ```bash
-python -m pytest tests/ -v
+# Using pytest (recommended)
+python3 -m pytest tests/ -v
+
+# Using unittest directly
+PYTHONPATH=. python3 tests/test_suite.py
+
+# Run specific test class
+python3 -m pytest tests/test_suite.py::TestIdealFunctionSelector -v
 ```
 
 ## 🏛️ Architecture
@@ -185,11 +199,32 @@ python -m pytest tests/ -v
 
 ### Common Issues
 
+**"Can't open file 'main.py'" Error**
+
+```bash
+# ❌ Wrong: python3 main.py (main.py is now in src/)
+# ✅ Correct: Use module syntax
+python3 -m src.main
+```
+
 **Import Errors**
 
 ```bash
-# Ensure you're in the project root and src is in Python path
-export PYTHONPATH="${PYTHONPATH}:./src"
+# For direct script execution, set PYTHONPATH
+export PYTHONPATH="${PYTHONPATH}:."
+
+# Or use the module syntax (recommended)
+python3 -m src.main
+```
+
+**Test Import Errors**
+
+```bash
+# Use pytest (handles imports automatically)
+python3 -m pytest tests/ -v
+
+# Or set PYTHONPATH for direct execution
+PYTHONPATH=. python3 tests/test_suite.py
 ```
 
 **Missing Data Files**
@@ -199,6 +234,50 @@ export PYTHONPATH="${PYTHONPATH}:./src"
 ls data/
 # Should show: ideal.csv  test.csv  train.csv
 ```
+
+## 📝 Migration Notes
+
+### Why the Running Method Changed
+
+**Previous Structure (Deprecated):**
+
+```
+ideal_function_selector/
+├── main.py              # Was in root directory
+├── data_loader.py       # All files in root
+├── ...
+```
+
+**Command:** `python3 main.py` ✅ (worked before)
+
+**New Structure (Current):**
+
+```
+ideal_function_selector/
+├── src/                 # Organized package structure
+│   ├── main.py         # Now in src/ package
+│   ├── data_loader.py  # All modules in src/
+│   └── ...
+```
+
+**Command:** `python3 -m src.main` ✅ (works now)
+
+### Benefits of New Structure
+
+- ✅ **Professional**: Industry-standard Python package layout
+- ✅ **Maintainable**: Clear separation of source, tests, data, docs
+- ✅ **Installable**: Can be installed as a pip package
+- ✅ **Scalable**: Easy to add new modules and organize features
+- ✅ **Testable**: Proper package structure for comprehensive testing
+
+### Quick Reference
+
+| Task                | Command                       |
+| ------------------- | ----------------------------- |
+| **Run Application** | `python3 -m src.main`         |
+| **Run Tests**       | `python3 -m pytest tests/ -v` |
+| **Use Bash Script** | `./scripts/run_project.sh`    |
+| **Install Package** | `pip install -e .`            |
 
 **Permission Errors (run_project.sh)**
 

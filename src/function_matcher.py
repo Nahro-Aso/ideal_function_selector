@@ -25,8 +25,8 @@ Example:
 
 import numpy as np
 from typing import Dict, List, Tuple, Any, Optional
-from data_loader import TrainingFunction, IdealFunction
-from exceptions import DataProcessingError
+from .data_loader import TrainingFunction, IdealFunction
+from .exceptions import DataProcessingError
 
 class ModelTrainer:
     """

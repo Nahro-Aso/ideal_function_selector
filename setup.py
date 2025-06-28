@@ -79,7 +79,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "ideal-function-selector=ideal_function_selector:main",
+            "ideal-function-selector=main:main",
         ],
     },
     include_package_data=True,

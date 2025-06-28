@@ -10,11 +10,11 @@ import os
 from unittest.mock import patch, MagicMock
 
 # Import modules to test
-from data_loader import DataReader, TrainingFunction, IdealFunction, BaseFunction
-from function_matcher import ModelTrainer
-from database_handler import DatabaseManager, TrainingData, IdealFunctions, TestDataMappings
-from exceptions import DataProcessingError, ValidationError, DatabaseError
-from main import IdealFunctionSelector
+from src.data_loader import DataReader, TrainingFunction, IdealFunction, BaseFunction
+from src.function_matcher import ModelTrainer
+from src.database_handler import DatabaseManager, TrainingData, IdealFunctions, TestDataMappings
+from src.exceptions import DataProcessingError, ValidationError, DatabaseError
+from src.main import IdealFunctionSelector
 
 
 class TestBaseFunction(unittest.TestCase):
@@ -335,8 +335,8 @@ class TestIdealFunctionSelector(unittest.TestCase):
         import shutil
         shutil.rmtree(self.temp_dir)
     
-    @patch('visualizer.DataVisualizer.create_comprehensive_plot')
-    @patch('visualizer.DataVisualizer.create_deviation_analysis_plot')
+    @patch('src.visualizer.DataVisualizer.create_comprehensive_plot')
+    @patch('src.visualizer.DataVisualizer.create_deviation_analysis_plot')
     def test_complete_analysis_integration(self, mock_deviation_plot, mock_comprehensive_plot):
         """Test complete analysis integration."""
         # Mock the visualization methods to avoid file creation during tests

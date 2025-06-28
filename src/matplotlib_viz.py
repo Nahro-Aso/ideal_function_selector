@@ -34,8 +34,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from typing import Dict, List, Tuple, Any
-from data_loader import DataReader, TrainingFunction, IdealFunction
-from function_matcher import ModelTrainer
+from .data_loader import DataReader, TrainingFunction, IdealFunction
+from .function_matcher import ModelTrainer
 
 def create_matplotlib_visualization() -> None:
     """

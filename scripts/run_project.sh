@@ -93,7 +93,7 @@ required_files=(
     "src/function_matcher.py"
     "src/visualizer.py"
     "src/exceptions.py"
-    "scripts/main.py"
+    "src/main.py"
 )
 
 for file in "${required_files[@]}"; do
@@ -164,7 +164,7 @@ echo "==========================================================================
 echo ""
 
 # Execute the main Python script
-if $PYTHON_CMD scripts/main.py; then
+if $PYTHON_CMD src/main.py; then
     echo ""
     echo "============================================================================="
     print_success "Analysis completed successfully!"

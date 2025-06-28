@@ -46,7 +46,7 @@ import pandas as pd
 import numpy as np
 from abc import ABC, abstractmethod
 from typing import Dict, List, Tuple, Optional, Any
-from exceptions import DataProcessingError, ValidationError
+from .exceptions import DataProcessingError, ValidationError
 
 
 class BaseFunction(ABC):

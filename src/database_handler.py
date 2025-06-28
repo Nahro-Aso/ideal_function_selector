@@ -39,8 +39,8 @@ Example:
 from sqlalchemy import create_engine, Column, Float, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from typing import Optional
-from exceptions import DatabaseError
+from typing import Optional, Any
+from .exceptions import DatabaseError
 
 # Base class for all SQLAlchemy models
 Base = declarative_base()

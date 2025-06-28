@@ -17,11 +17,11 @@ Classes:
 
 import os
 from typing import List, Dict, Any
-from database_handler import DatabaseManager, TrainingData, IdealFunctions, TestDataMappings
-from data_loader import DataReader
-from function_matcher import ModelTrainer
-from visualizer import DataVisualizer
-from exceptions import DataProcessingError, DatabaseError
+from .database_handler import DatabaseManager, TrainingData, IdealFunctions, TestDataMappings
+from .data_loader import DataReader
+from .function_matcher import ModelTrainer
+from .visualizer import DataVisualizer
+from .exceptions import DataProcessingError, DatabaseError
 
 
 class IdealFunctionSelector:
