@@ -163,8 +163,8 @@ print_status "Starting Ideal Function Selection Analysis..."
 echo "============================================================================="
 echo ""
 
-# Execute the main Python script
-if $PYTHON_CMD src/main.py; then
+# Execute the main Python script using module syntax
+if $PYTHON_CMD -m src.main; then
     echo ""
     echo "============================================================================="
     print_success "Analysis completed successfully!"
