@@ -80,16 +80,20 @@ else
     PIP_CMD=""
 fi
 
-# Check for required Python files
-print_status "Checking required project files..."
+# Get the project root directory (parent of scripts directory)
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$PROJECT_ROOT"
+
+# Check for required Python files in src directory
+print_status "Checking required project files in src/..."
 required_files=(
-    "main.py"
-    "ideal_function_selector.py"
-    "data_loader.py"
-    "database_handler.py"
-    "function_matcher.py"
-    "visualizer.py"
-    "exceptions.py"
+    "src/ideal_function_selector.py"
+    "src/data_loader.py"
+    "src/database_handler.py"
+    "src/function_matcher.py"
+    "src/visualizer.py"
+    "src/exceptions.py"
+    "scripts/main.py"
 )
 
 for file in "${required_files[@]}"; do
@@ -100,9 +104,9 @@ for file in "${required_files[@]}"; do
     fi
 done
 
-# Check for required data files
-print_status "Checking required data files..."
-data_files=("train.csv" "ideal.csv" "test.csv")
+# Check for required data files in data directory
+print_status "Checking required data files in data/..."
+data_files=("data/train.csv" "data/ideal.csv" "data/test.csv")
 missing_data_files=()
 
 for file in "${data_files[@]}"; do
@@ -115,9 +119,14 @@ done
 
 if [ ${#missing_data_files[@]} -ne 0 ]; then
     print_error "Missing required data files: ${missing_data_files[*]}"
-    print_error "Please ensure all CSV data files are in the current directory."
+    print_error "Please ensure all CSV data files are in the data/ directory."
     exit 1
 fi
+
+# Create output directory if it doesn't exist
+print_status "Creating output directory..."
+mkdir -p output
+print_success "Output directory ready"
 
 # Check if virtual environment should be activated
 if [ -d "venv" ] || [ -d ".venv" ]; then
@@ -142,13 +151,10 @@ fi
 
 # Clean up any previous output files
 print_status "Cleaning up previous output files..."
-output_files=("results_visualization.html" "deviation_analysis.html" "ideal_functions.db")
-for file in "${output_files[@]}"; do
-    if [ -f "$file" ]; then
-        rm "$file"
-        print_status "Removed previous $file"
-    fi
-done
+if [ -d "output" ]; then
+    rm -f output/*.html output/*.png output/*.db
+    print_status "Cleaned output directory"
+fi
 
 # Run the main application
 echo ""
@@ -158,7 +164,7 @@ echo "==========================================================================
 echo ""
 
 # Execute the main Python script
-if $PYTHON_CMD main.py; then
+if $PYTHON_CMD scripts/main.py; then
     echo ""
     echo "============================================================================="
     print_success "Analysis completed successfully!"
@@ -167,18 +173,21 @@ if $PYTHON_CMD main.py; then
     
     # Check for generated output files
     print_status "Checking generated output files..."
-    if [ -f "results_visualization.html" ]; then
-        print_success "Generated: results_visualization.html"
+    if [ -f "output/results_visualization.html" ]; then
+        print_success "Generated: output/results_visualization.html"
     fi
-    if [ -f "deviation_analysis.html" ]; then
-        print_success "Generated: deviation_analysis.html"
+    if [ -f "output/deviation_analysis.html" ]; then
+        print_success "Generated: output/deviation_analysis.html"
     fi
-    if [ -f "ideal_functions.db" ]; then
-        print_success "Generated: ideal_functions.db"
+    if [ -f "output/ideal_functions.db" ]; then
+        print_success "Generated: output/ideal_functions.db"
+    fi
+    if [ -f "output/matplotlib_visualization.png" ]; then
+        print_success "Generated: output/matplotlib_visualization.png"
     fi
     
     echo ""
-    print_status "You can now open the HTML files in your web browser to view the results."
+    print_status "You can now open the HTML files in the output/ directory with your web browser to view the results."
     
 else
     echo ""

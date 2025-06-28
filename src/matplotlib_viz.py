@@ -106,11 +106,21 @@ def create_matplotlib_visualization() -> None:
     
     try:
         # Load data using the data reader component
+        import os
         data_reader = DataReader()
-        training_file = "train.csv"
+        
+        # Get paths to data files in the data directory
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(script_dir)
+        data_dir = os.path.join(project_root, "data")
+        
+        training_file = os.path.join(data_dir, "train.csv")
+        ideal_file = os.path.join(data_dir, "ideal.csv")
+        test_file = os.path.join(data_dir, "test.csv")
+        
         training_functions = data_reader.read_training_data(training_file)
-        ideal_functions = data_reader.read_ideal_data("ideal.csv")
-        test_data = data_reader.read_test_data("test.csv")
+        ideal_functions = data_reader.read_ideal_data(ideal_file)
+        test_data = data_reader.read_test_data(test_file)
         
         # Find best matches using the model trainer
         model_trainer = ModelTrainer()
@@ -170,11 +180,14 @@ def create_matplotlib_visualization() -> None:
         plt.grid(True, alpha=0.3)
         plt.tight_layout()
         
-        # Save the plot as high-resolution PNG
-        plt.savefig('matplotlib_visualization.png', dpi=300, bbox_inches='tight')
+        # Save the plot as high-resolution PNG in the output directory
+        output_dir = os.path.join(project_root, "output")
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, 'matplotlib_visualization.png')
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.show()
         
-        print("Matplotlib visualization saved as 'matplotlib_visualization.png'")
+        print(f"Matplotlib visualization saved as '{output_path}'")
         
         # Print comprehensive summary to console
         print(f"\n📊 VISUALIZATION SUMMARY:")
@@ -191,7 +204,7 @@ def create_matplotlib_visualization() -> None:
             print(f"Training Dataset {train_num} → Ideal Function {ideal_num} (deviation: {deviation:.2f})")
     
     except FileNotFoundError as e:
-        print(f"Error: Required data files not found. Please ensure train.csv, ideal.csv, and test.csv are in the current directory.")
+        print(f"Error: Required data files not found. Please ensure train.csv, ideal.csv, and test.csv are in the data/ directory.")
         print(f"Details: {e}")
         raise
     

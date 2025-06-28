@@ -159,21 +159,22 @@ cython_debug/
 .idea/
 
 # Project-specific files
-# Database files
+# Output directory with generated files
+output/
+results/
+
+# Database files (if not in output directory)
 *.db
 *.sqlite
 *.sqlite3
 
-# Generated visualization files
+# Generated visualization files (if not in output directory)
 *.html
 *.png
 *.jpg
 *.jpeg
 *.gif
 *.svg
-matplotlib_visualization.png
-results_visualization.html
-deviation_analysis.html
 
 # Data files (uncomment if you don't want to track data files)
 # *.csv
